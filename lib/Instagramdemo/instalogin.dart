@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-void main(){
-  runApp(MaterialApp(home: Insta_Login(),));
-}
 
 class Insta_Login extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
    return Scaffold(
     appBar: AppBar(
-      backgroundColor: Colors.pink,
+      backgroundColor: Color.fromARGB(255, 223, 70, 121),
       title: Text("Instagram",style: GoogleFonts.robotoSerif(fontSize: 15),),),
       body: Center(
         child: Column(
@@ -80,8 +77,14 @@ class Insta_Login extends StatelessWidget{
                 ),
                          ),
              ),
- ElevatedButton(onPressed: (){}, 
- child: Text("Login",style: GoogleFonts.robotoSerif(),))
+            SizedBox(height: 40,),
+
+            ElevatedButton(onPressed: (){}, 
+            child: Text("Login",style: GoogleFonts.robotoSerif(),),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color.fromARGB(255, 223, 70, 121),),
+            
+            )
 
           
           ],

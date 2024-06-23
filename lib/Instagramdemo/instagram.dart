@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_frameworks/Instagramdemo/instalogin.dart';
 import 'package:google_fonts/google_fonts.dart';
  void main(){
-  runApp(MaterialApp(home: Insta_Splash(),));
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Insta_Splash(),));
  }
 class Insta_Splash extends StatefulWidget{
   @override
@@ -24,8 +26,9 @@ class Insta_SplashState extends State{
     return Scaffold(
       body: Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset("assets/icons/insta.jpg"),
+          Image.asset("assets/icons/insta.jpg",width: 100,height: 100,),
           Text("Instagram",style: GoogleFonts.robotoSerif(fontSize: 20,color: Colors.black),)
         ],
       ),
