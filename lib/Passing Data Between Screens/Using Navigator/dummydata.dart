@@ -1,4 +1,4 @@
-List<Map<String, dynamic>> product = [
+List<Map<String, dynamic>> products = [
   // [ ] list ,{} Map
   {
     "id": 1,

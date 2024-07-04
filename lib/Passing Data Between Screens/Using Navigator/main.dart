@@ -17,8 +17,8 @@ class Product_main extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.all(15),
         // product list le oro map one by one ayit product il kittum
-        children: product
-            .map((product) => ListTile(
+        children: products
+            .map((products) => ListTile(
                   // map iterable - one by one
                   leading: Container(
                     // same size with images use box decoration
@@ -27,11 +27,11 @@ class Product_main extends StatelessWidget {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(product["image"]))),
+                            image: NetworkImage(products["image"]))),
                   ),
-                  title: Text(product["name"]),
+                  title: Text(products["name"]),
                   subtitle: Text(
-                      "${product["price"]} \$"), // it is dynamic so use interpolation
+                      "${products["price"]} \$"), // it is dynamic so use interpolation
                 ))
             .toList(), // Varunna list ennath map annu - converted to list - childrean il kanikkanam
       ),
