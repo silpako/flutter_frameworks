@@ -47,6 +47,7 @@ dependencies:
   introduction_screen:
   flutter_custom_clippers: ^2.1.0
   readmore: ^3.0.0
+  google_maps_flutter: ^2.7.0
 
 dev_dependencies:
   flutter_test:
