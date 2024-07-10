@@ -48,6 +48,7 @@ dependencies:
   flutter_custom_clippers: ^2.1.0
   readmore: ^3.0.0
   google_maps_flutter:
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:
