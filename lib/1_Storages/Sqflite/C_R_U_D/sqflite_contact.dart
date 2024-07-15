@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_frameworks/1_Storages/Sqflite/C_R_U_D/sql_function.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project_july_new/storages/sqflite_ex/sqflite_crud/sql_functions.dart';
 
-void main(){
-  runApp(MaterialApp(home: Contact_Book(),));
+void main() {
+  runApp(MaterialApp(
+    home: Contact_Book(),
+  ));
 }
+
 class Contact_Book extends StatefulWidget {
   @override
   State<Contact_Book> createState() => _Contact_BookState();
@@ -87,7 +90,7 @@ class _Contact_BookState extends State<Contact_Book> {
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Name"),
                 ),
-                SizedBox(height:20),
+                SizedBox(height: 20),
                 TextField(
                   controller: num_controller,
                   decoration: const InputDecoration(
@@ -96,7 +99,8 @@ class _Contact_BookState extends State<Contact_Book> {
                 ElevatedButton(
                     onPressed: () {
                       if (id == null) {
-                        createContact(name_controller.text, num_controller.text);
+                        createContact(
+                            name_controller.text, num_controller.text);
                       }
                       if (id != null) {
                         updateContact(id);
@@ -106,7 +110,7 @@ class _Contact_BookState extends State<Contact_Book> {
                       Navigator.of(context).pop();
                     },
                     child:
-                    Text(id == null ? "Create Contact" : "Update Contact"))
+                        Text(id == null ? "Create Contact" : "Update Contact"))
               ],
             ),
           );
@@ -114,9 +118,9 @@ class _Contact_BookState extends State<Contact_Book> {
   }
 
   Future<void> createContact(String name, String number) async {
-   int id =  await SQL_Functions.addnewContact(name, number);
-   print(id);
-   readContact_and_refresh_Ui();
+    int id = await SQL_Functions.addnewContact(name, number);
+    print(id);
+    readContact_and_refresh_Ui();
   }
 
   @override
@@ -134,7 +138,8 @@ class _Contact_BookState extends State<Contact_Book> {
   }
 
   Future<void> updateContact(int id) async {
-    await SQL_Functions.updateContactt(id, name_controller.text, num_controller.text);
+    await SQL_Functions.updateContactt(
+        id, name_controller.text, num_controller.text);
     readContact_and_refresh_Ui(); // to update the list after updating contact
   }
 
