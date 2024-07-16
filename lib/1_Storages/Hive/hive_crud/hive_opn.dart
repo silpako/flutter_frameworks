@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/adapters.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -43,9 +42,7 @@ class _HiveTodoState extends State<HiveTodo> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2),
               itemBuilder: (context, index) {
-                int date =
-                    DateTime.fromMillisecondsSinceEpoch(task[index]['time'])
-                        as int;
+                int date = task[index]['time'];
 
                 return Card(
                   color: Colors.primaries[index % Colors.primaries.length],
@@ -64,7 +61,8 @@ class _HiveTodoState extends State<HiveTodo> {
                           overflow: TextOverflow.visible,
                           maxLines: 4,
                           style: GoogleFonts.habibi(fontSize: 15)),
-                      Text('${date}', style: GoogleFonts.habibi(fontSize: 15)),
+                      Text('${DateTime.fromMillisecondsSinceEpoch(date)}',
+                          style: GoogleFonts.habibi(fontSize: 15)),
                       Expanded(
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -104,7 +102,7 @@ class _HiveTodoState extends State<HiveTodo> {
         builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.greenAccent,
-            content: Column( 
+            content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
@@ -130,7 +128,7 @@ class _HiveTodoState extends State<HiveTodo> {
                       createTask({
                         'tname': title_cntrl.text.trim(),
                         'tcontent': descr_cntrl.text.trim(),
-                        'time': DateTime.now().microsecondsSinceEpoch.toString()
+                        'time': DateTime.now().millisecondsSinceEpoch
                       });
                     }
                     title_cntrl.text = "";
@@ -140,11 +138,13 @@ class _HiveTodoState extends State<HiveTodo> {
                   child: const Text('Create Task')),
               TextButton(
                   onPressed: () {
-                    updateTask(key, {
-                      'tname': title_cntrl.text.trim(),
-                      'tcontent': descr_cntrl.text.trim(),
-                      'time': DateTime.now().microsecondsSinceEpoch.toString()
-                    });
+                    if (key != null) {
+                      updateTask(key, {
+                        'tname': title_cntrl.text.trim(),
+                        'tcontent': descr_cntrl.text.trim(),
+                        'time': DateTime.now().millisecondsSinceEpoch
+                      });
+                    }
                     title_cntrl.text = "";
                     descr_cntrl.text = "";
                     Navigator.pop(context);
@@ -176,7 +176,8 @@ class _HiveTodoState extends State<HiveTodo> {
       return {
         'id': key,
         'taskname': value['tname'],
-        'taskdesc': value['tcontent']
+        'taskdesc': value['tcontent'],
+        'time': value['time']
       };
     }).toList();
 
