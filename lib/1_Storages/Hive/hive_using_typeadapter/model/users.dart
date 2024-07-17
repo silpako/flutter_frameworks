@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+part 'users.g.dart';
 
 @HiveType(typeId: 0)
 class Users {
