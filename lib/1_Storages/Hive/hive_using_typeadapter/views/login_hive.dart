@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_frameworks/1_Storages/Hive/hive_using_typeadapter/database/hivedb.dart';
 import 'package:flutter_frameworks/1_Storages/Hive/hive_using_typeadapter/model/users.dart';
+import 'package:flutter_frameworks/1_Storages/Hive/hive_using_typeadapter/views/hive_home.dart';
 import 'package:flutter_frameworks/1_Storages/Hive/hive_using_typeadapter/views/reg_hive.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -9,7 +11,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox<Users>('User'); //
-  // await Hive.registerAdapter(adapter);
+  Hive.registerAdapter(UsersAdapter());
+  runApp(GetMaterialApp(
+    home: Hive_Login(),
+  ));
 }
 
 class Hive_Login extends StatelessWidget {
@@ -49,7 +54,10 @@ class Hive_Login extends StatelessWidget {
                 height: 15,
               ),
               MaterialButton(
-                onPressed: () {},
+                onPressed: () async {
+                  final users = await HiveDB.instance.getUsers();
+                  validateLogin(users);
+                },
                 shape: const StadiumBorder(),
                 color: Colors.pink,
                 child: const Text('Login Here'),
@@ -64,5 +72,30 @@ class Hive_Login extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> validateLogin(List<Users> users) async {
+    final email = email_controller.text.trim();
+    final pwd = pwd_controller.text.trim();
+    bool userFound = false;
+    if (email != "" && pwd != "") {
+      await Future.forEach(users, (user) {
+        if (user.email == email && user.password == pwd) {
+          userFound = true;
+        } else {
+          userFound = false;
+        }
+      });
+      if (userFound == true) {
+        Get.offAll(() => HiveHome(email: email));
+        Get.snackbar("Success", "Login Success", backgroundColor: Colors.green);
+      } else {
+        Get.snackbar("Error", "Login Failed,No user Exists",
+            backgroundColor: Colors.red);
+      }
+    } else {
+      Get.snackbar("Error", "Fields must not be empty",
+          backgroundColor: Colors.red);
+    }
   }
 }
